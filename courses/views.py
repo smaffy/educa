@@ -12,6 +12,7 @@ from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 
 from .models import Module, Content, Course, Subject
 from .forms import ModuleFormSet
+from students.forms import CourseEnrollForm
 
 # больше о миксинах на https://docs.djangoproject.com/en/2.0/topics/class-based-views/mixins/ .
 # список всех миксинов, предоставленных django-braces на https://django-braces.readthedocs.io/ .
@@ -171,4 +172,10 @@ class CourseListView(TemplateResponseMixin, View):
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/course/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+
+        context['enroll_form'] = CourseEnrollForm(initial={'course': self.object})
+        return context
 
