@@ -64,4 +64,4 @@ class StudentCourseDetailView(LoginRequiredMixin, DetailView):
         else:
             # get first module
             context['module'] = course.modules.all()[0]
-            return context
+        return context
